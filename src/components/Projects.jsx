@@ -1,78 +1,102 @@
-import { useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SectionHeading from './SectionHeading';
-import DepthCarousel from './DepthCarousel';
-import { GithubIcon } from './BrandIcons';
 import { projects } from '../data/projects';
+import { ExternalLink } from 'lucide-react';
+import { GithubIcon } from './BrandIcons';
 
 const Projects = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeProject = projects[activeIndex];
-  const carouselItems = useMemo(() => projects.map(project => ({
-    image: project.image,
-    alt: `${project.title} project preview`
-  })), []);
-
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(14,165,233,0.08),transparent_36%)] pointer-events-none" />
-      <div className="container mx-auto px-6 md:px-12 relative">
-        <SectionHeading title="Featured Projects" subtitle="A selection of work demonstrating my ability to bridge business requirements and technical implementation." />
+    <section id="projects" className="py-24 relative">
+      <div className="container mx-auto px-6 md:px-12">
+        <SectionHeading 
+          title="Featured Projects" 
+          subtitle="A selection of work demonstrating my ability to bridge business requirements and technical implementation."
+        />
 
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-10 lg:gap-16 items-center">
-          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-80px' }} className="h-[360px] sm:h-[420px] lg:h-[500px] relative">
-            <DepthCarousel
-              items={carouselItems}
-              cardWidth={460}
-              cardHeight={350}
-              depth={200}
-              spread={76}
-              tilt={18}
-              visibleCards={3}
-              autoplay
-              autoplayDelay={4800}
-              onChange={index => setActiveIndex(index)}
-            />
-          </motion.div>
-
-          <div className="min-h-[430px] flex items-center" aria-live="polite">
-            <AnimatePresence mode="wait">
-              <motion.article
-                key={activeProject.id}
-                initial={{ opacity: 0, x: 28, y: 10 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, x: -18, y: -6 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="w-full glass rounded-2xl border border-white/10 p-6 sm:p-8 relative overflow-hidden"
+        <div className="space-y-24 md:space-y-32 mt-12">
+          {projects.map((project, index) => {
+            const isEven = index % 2 === 0;
+            const isSpecial = project.accentColor === 'electric';
+            
+            return (
+              <motion.div 
+                key={project.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7 }}
+                className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-10 lg:gap-16 items-center`}
               >
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
-                <div className="flex items-center gap-4 mb-5">
-                  <span className="text-5xl font-bold text-white/10">{activeProject.id}</span>
-                  <span className="text-primary font-semibold tracking-widest text-xs uppercase">{activeProject.category}</span>
+                <div className="w-full lg:w-1/2 relative group">
+                  <div className={`absolute inset-0 bg-primary/20 rounded-2xl transform translate-x-3 translate-y-3 transition-transform duration-500 group-hover:translate-x-5 group-hover:translate-y-5 ${isSpecial ? 'bg-cyan-500/20' : ''}`}></div>
+                  <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-surface aspect-[4/3] w-full">
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(event) => {
+                        event.target.onerror = null;
+                        event.target.src = "https://via.placeholder.com/800x600/131b2f/0ea5e9?text=Project+Screenshot";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                      {project.githubUrl && (
+                        <a href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} GitHub repository`} className="w-12 h-12 rounded-full bg-white text-background flex items-center justify-center hover:scale-110 transition-transform">
+                          <GithubIcon size={20} />
+                        </a>
+                      )}
+                      {project.liveUrl && (
+                        <a href={project.liveUrl} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} live project`} className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition-transform">
+                          <ExternalLink size={20} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-3xl sm:text-4xl font-bold text-text-primary mb-5 leading-tight"><span className="text-primary">{activeProject.title}</span></h3>
-                <p className="text-text-secondary leading-relaxed mb-6">{activeProject.description}</p>
-                <div className="flex flex-wrap gap-2 mb-8" aria-label="Technologies used">
-                  {activeProject.technologies.map(technology => <span key={technology} className="px-3 py-1.5 text-xs font-medium bg-primary/10 rounded-full text-primary border border-primary/20">{technology}</span>)}
+
+                <div className="w-full lg:w-1/2 flex flex-col">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="text-5xl font-bold text-white/5">{project.id}</span>
+                    <span className="text-primary font-medium tracking-wider text-sm uppercase">{project.category}</span>
+                  </div>
+                  <h3 className="text-3xl font-bold text-text-primary mb-4">{project.title}</h3>
+                  <div className="glass p-6 rounded-xl mb-6 relative">
+                    {isSpecial && <div className="absolute top-0 left-0 w-1 h-full bg-primary rounded-l-xl"></div>}
+                    <p className="text-text-secondary mb-4 text-sm leading-relaxed">
+                      <strong className="text-text-primary block mb-1">Problem:</strong>
+                      {project.problem}
+                    </p>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      <strong className="text-text-primary block mb-1">Solution:</strong>
+                      {project.solution}
+                    </p>
+                  </div>
+                  <div className="mb-6">
+                    <h4 className="text-text-primary font-semibold mb-2 text-sm">Key Contribution:</h4>
+                    <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-text-secondary list-disc list-inside">
+                      {project.contribution.slice(0, 4).map((item, contributionIndex) => <li key={contributionIndex}>{item}</li>)}
+                      {project.contribution.length > 4 && <li>...and more</li>}
+                    </ul>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-8 mt-auto">
+                    {project.technologies.map((technology, technologyIndex) => (
+                      <span key={technologyIndex} className="px-3 py-1 text-xs font-medium bg-surface rounded-full text-text-secondary border border-white/5">{technology}</span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-4">
+                    {project.githubUrl ? (
+                      <a href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} GitHub repository`} className="text-text-secondary hover:text-white transition-colors p-2">
+                        <GithubIcon size={20} />
+                      </a>
+                    ) : (
+                      <span className="text-text-secondary/30 p-2 cursor-not-allowed" title="Repository not public"><GithubIcon size={20} /></span>
+                    )}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-3">
-                  <a href={activeProject.liveUrl || activeProject.image} target="_blank" rel="noreferrer" aria-label={`View ${activeProject.title} project`} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-semibold hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(14,165,233,0.28)] transition-all duration-300">
-                    View Project <ExternalLink size={17} />
-                  </a>
-                  {activeProject.githubUrl ? (
-                    <a href={activeProject.githubUrl} target="_blank" rel="noreferrer" aria-label={`Open ${activeProject.title} GitHub repository`} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-white/15 text-text-primary font-semibold hover:border-primary hover:text-primary hover:-translate-y-1 transition-all duration-300">
-                      <GithubIcon size={18} /> GitHub
-                    </a>
-                  ) : (
-                    <button type="button" disabled aria-label={`GitHub repository for ${activeProject.title} is not public`} title="Repository is not public" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-white/10 text-text-secondary/40 cursor-not-allowed">
-                      <GithubIcon size={18} /> GitHub
-                    </button>
-                  )}
-                </div>
-              </motion.article>
-            </AnimatePresence>
-          </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
