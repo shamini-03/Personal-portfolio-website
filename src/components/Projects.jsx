@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import SectionHeading from './SectionHeading';
 import { projects } from '../data/projects';
-import { ExternalLink, ArrowUpRight } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { GithubIcon } from './BrandIcons';
 
 const Projects = () => {
@@ -99,11 +99,6 @@ const Projects = () => {
                   </div>
                   
                   <div className="flex items-center gap-4">
-                    <button className="px-6 py-2.5 bg-primary/10 text-primary border border-primary/30 hover:bg-primary hover:text-white rounded-full font-medium transition-all duration-300 flex items-center gap-2 group">
-                      View Case Study
-                      <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </button>
-                    
                     {project.githubUrl ? (
                       <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-text-secondary hover:text-white transition-colors p-2">
                         <GithubIcon size={20} />

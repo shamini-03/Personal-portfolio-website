@@ -13,6 +13,17 @@ export const experience = [
       "Presented the innovation concept to judges and visitors at the exhibition"
     ]
   },
-  // EDIT: Add more experiences below (internships, volunteer work, etc.)
+  {
+    id: "exp-2",
+    role: "University Carrom Team Member",
+    organization: "University of Kelaniya",
+    type: "Sports & Teamwork",
+    period: "Present",
+    description: "An active member of the University of Kelaniya carrom team, developing teamwork, discipline and competitive focus.",
+    responsibilities: [
+      "Participate in team practices and university sporting activities",
+      "Collaborate with team members and contribute to a positive team environment",
+      "Build discipline, concentration and strategic thinking through competitive sport"
+    ]
+  }
 ];
-

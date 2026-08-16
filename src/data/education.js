@@ -12,6 +12,17 @@ export const education = [
     ]
   },
   {
+    id: "school-al",
+    degree: "G.C.E. Advanced Level",
+    institution: "Girls' High School, Kandy",
+    department: "",
+    status: "Completed",
+    period: "2022 - 2022",
+    expectedGraduation: "",
+    coursework: [],
+    achievements: []
+  },
+  {
     id: "school-ol",
     degree: "G.C.E. Ordinary Level",
     institution: "St. Anthony's Girls' College, Kandy",

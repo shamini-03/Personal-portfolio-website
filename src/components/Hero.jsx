@@ -118,11 +118,11 @@ const Hero = () => {
               
               {/* Image container with Blob shape */}
               <div className="absolute inset-0 bg-surface blob-shape overflow-hidden border-2 border-primary/20 z-10 group shadow-[0_0_40px_rgba(0,210,255,0.2)]">
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-primary/20 to-transparent z-10 pointer-events-none transition-opacity duration-700 group-hover:opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-primary/15 to-cyan-300/10 z-10 pointer-events-none mix-blend-color transition-opacity duration-700 group-hover:opacity-40"></div>
                 <img 
                   src={personalData.photoUrl} 
                   alt={personalData.name} 
-                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-2 scale-[1.35] origin-[50%_25%] grayscale contrast-125 group-hover:grayscale-0 group-hover:contrast-100"
+                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-[1.42] group-hover:rotate-1 scale-[1.35] origin-[50%_25%] saturate-75 contrast-110 brightness-90 group-hover:saturate-100 group-hover:brightness-100"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = "https://via.placeholder.com/400x500/0f172a/00d2ff?text=SD";

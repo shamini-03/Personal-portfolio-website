@@ -6,12 +6,12 @@ export const personalData = {
   shortIntro: "I transform business challenges into clear requirements, meaningful digital experiences and practical technology solutions.",
   about: "I am an undergraduate following a BSc (Hons) in Management and Information Technology at the University of Kelaniya. I am interested in understanding how organisations operate, identifying business problems and designing suitable technology-based solutions. My career goal is to become a professional Business Analyst and contribute to meaningful digital transformation projects.",
   location: "Sri Lanka",
-  email: "your.email@example.com", // EDIT: Add your email here
+  email: "shaminilak03@gmail.com",
   githubUsername: "Shamini-03",
   githubUrl: "https://github.com/Shamini-03",
   linkedinUrl: "https://www.linkedin.com/in/shamini-dharmasena-aa5585348",
-  cvUrl: "/assets/Shamini_Dharmasena_CV.pdf",
-  photoUrl: "/assets/professional photo .jpeg",
+  cvUrl: `${import.meta.env.BASE_URL}assets/Shamini_Dharmasena_CV.pdf`,
+  photoUrl: `${import.meta.env.BASE_URL}assets/professional photo .jpeg`,
 };
 
 export const interests = [
